@@ -12,7 +12,7 @@
         </div>
         <input v-model="loginForm.username" type="text" placeholder="Username" class="input input-bordered w-full" />
       </label>
-ion:home-sharp
+
 
       <label class="form-control w-full">
         <div class="label">
