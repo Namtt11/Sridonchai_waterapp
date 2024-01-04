@@ -1,7 +1,10 @@
 <template>
   <div class="flex h-dvh">
     <div class="my-auto w-full mx-3 border rounded-md p-3 ">
-      <div class="text-2xl text-center font-bold">Login</div>
+      <div class="text-2xl text-center font-bold">
+      <Icon name="entypo:login"/>
+        Login
+      </div>
 
       <label class="form-control w-full">
         <div class="label">
@@ -9,6 +12,7 @@
         </div>
         <input v-model="loginForm.username" type="text" placeholder="Username" class="input input-bordered w-full" />
       </label>
+ion:home-sharp
 
       <label class="form-control w-full">
         <div class="label">
