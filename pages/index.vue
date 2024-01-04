@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen">
+  <div class="flex h-dvh">
     <div class="my-auto w-full mx-3 border rounded-md p-3 ">
       <div class="text-2xl text-center font-bold">Login</div>
 
