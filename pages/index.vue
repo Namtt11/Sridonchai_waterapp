@@ -1,31 +1,23 @@
 <template>
-  <div class="flex h-dvh">
-    <div class="my-auto w-full mx-3 border rounded-md p-3 ">
-      <div class="text-2xl text-center font-bold">Login</div>
+  <div>
+    TEST API :
 
-      <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text">Username</span>
-        </div>
-        <input type="text" placeholder="Username" class="input input-bordered w-full" />
-      </label>
-
-      <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text">Password</span>
-        </div>
-        <input type="password" placeholder="Password" class="input input-bordered w-full" />
-      </label>
-
-      <button className="btn btn-block mt-3 bg-sky-500 text-white text-xl font-bold">Login</button>
+    <div>
+      <div class="text-xl">Cat Facts : </div>
+      <ul class="list-disc">
+        <li v-for="fact in catFacts">{{fact.text}}</li>
+      </ul>
     </div>
-
-
   </div>
 </template>
 
 <script lang="ts" setup>
+type catResult = {
+  text : string,
+}
+let result = await useAPIFetch<catResult[]>("/facts/random?animal_type=cat&amount=2",{method : "get"})
 
+let catFacts = result.data
 </script>
 
 <style></style>
