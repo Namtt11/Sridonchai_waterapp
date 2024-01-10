@@ -8,11 +8,13 @@
                 </div>
                 <input type="text" placeholder="ค้นหาบ้าน" class="input input-bordered w-full max-w-xs border-sky-500" />
                 <button class="btn flex-col bg-white border-sky-500 ">
-                    <Icon name="material-symbols:search" />
+                    <div class="text-md">
+                        <Icon name="material-symbols:search" />  
+                    </div>
                     ค้นหา</button>
             </div>
             <div class="m-3">
-                <div class="m-3 p-2 border rounded-md border-sky-500">
+                <div class="m-3 p-3 border rounded-md border-sky-500">
 
                     <p><b>ชื่อผู้ใช้น้ำ</b> นายสมชาย แมนมาก</p>
                     <p><b>ที่อยู่</b> 389 ม.3 อ.เมือง จ.พะเยา</p>
@@ -20,16 +22,7 @@
                     <p><b>หมายเลขมิเตอร์ประจำเดือน</b> 789</p>
 
                 </div>
-                <div class="m-3 p-2 border rounded-md border-sky-500">
-
-                    <p><b>ชื่อผู้ใช้น้ำ</b> นายสมชาย แมนมาก</p>
-                    <p><b>ที่อยู่</b> 389 ม.3 อ.เมือง จ.พะเยา</p>
-                    <p><b>ค้างชำระ</b> 100  บาท</p>
-                    <p><b>หมายเลขมิเตอร์ประจำเดือน</b> 789</p>
-
-
-                </div>
-                <div class="m-3 p-2 border rounded-md border-sky-500">
+                <div class="m-3 p-3 border rounded-md border-sky-500">
 
                     <p><b>ชื่อผู้ใช้น้ำ</b> นายสมชาย แมนมาก</p>
                     <p><b>ที่อยู่</b> 389 ม.3 อ.เมือง จ.พะเยา</p>
@@ -38,7 +31,16 @@
 
 
                 </div>
-                <div class="m-3 p-2 border rounded-md border-sky-500">
+                <div class="m-3 p-3 border rounded-md border-sky-500">
+
+                    <p><b>ชื่อผู้ใช้น้ำ</b> นายสมชาย แมนมาก</p>
+                    <p><b>ที่อยู่</b> 389 ม.3 อ.เมือง จ.พะเยา</p>
+                    <p><b>ค้างชำระ</b> 100  บาท</p>
+                    <p><b>หมายเลขมิเตอร์ประจำเดือน</b> 789</p>
+
+
+                </div>
+                <div class="m-3 p-3 border rounded-md border-sky-500">
 
                     <p><b>ชื่อผู้ใช้น้ำ</b> นายสมชาย แมนมาก</p>
                     <p><b>ที่อยู่</b> 389 ม.3 อ.เมือง จ.พะเยา</p>
