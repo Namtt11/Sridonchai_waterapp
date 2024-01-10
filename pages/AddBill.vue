@@ -41,14 +41,12 @@
                 </tbody>
             </table>
         </div>
-       
+        <div>เลขมิเตอร์ปัจจุบัน  <input type="text" placeholder="Type here" class="input input-bordered input-primary w-20 max-w-xs" />  หน่วย</div>
+        <div>ราคา <input type="text" placeholder="Type here" class="input input-bordered input-primary w-20 max-w-xs" /> บาท</div>
 
+        <div> <button class="btn btn-error">ยกเลิก</button> <button class="btn btn-success">บันทึก</button> </div>
 
         
-    
-    
-    
-    
     
     </div>
    </div>      
