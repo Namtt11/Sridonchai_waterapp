@@ -15,7 +15,7 @@
 type catResult = {
   text : string,
 }
-let result = await useAPIFetch<catResult[]>("/facts/random?animal_type=cat&amount=2",{method : "get"})
+let result = await useFetch<catResult[]>("https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=2",{method : "get"})
 
 let catFacts = result.data
 </script>

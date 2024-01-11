@@ -13,7 +13,7 @@
                     </div>
                     ค้นหา</button>
             </div>
-            <div class="m-3">
+            <div class="m-3 ">
                 <div class="m-3 p-3 border rounded-md border-sky-500">
 
                     <p><b>ชื่อผู้ใช้น้ำ</b> นายสมชาย แมนมาก</p>
@@ -56,3 +56,6 @@
 
     </div>
 </template>
+<script setup lang="ts">
+
+</script>

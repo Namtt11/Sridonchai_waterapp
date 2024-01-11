@@ -6,7 +6,7 @@
         </div>
 
         <div class="text-2xl text-center rounded-md border-sky-500">
-             เพิ่มบิล เดือนกุมภาพันธ์ <Icon name="material-symbols:calendar-month-outline"/>
+            <VueDatePicker v-model="month" month-picker />
         </div>
         <div class="text-2xl text-center">ข้อมูลการใช้น้ำย้อนหลัง <Icon name="ion:water-outline"/></div>
         <div class="overflow-x-auto">
@@ -51,3 +51,13 @@
     </div>
    </div>      
 </template>
+<script setup lang="ts">
+    import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import { ref } from 'vue';
+
+const month = ref({
+    month: new Date().getMonth(),
+    year: new Date().getFullYear()
+});
+</script>
