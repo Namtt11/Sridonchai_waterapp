@@ -1,10 +1,7 @@
 <template>
-    <div class="flex h-dvh">
-        <div class=" w-full ">
-            <div class="pt-2 text-xl">
-                <Icon name="ep:back"></Icon>
-            </div>
-
+    <div class="flex flex-col mx-3 h-dvh relative">
+        <div class="flex flex-col sticky top-0 pt-3 bg-white">
+        
             <div class="text-2xl text-center font-bold">
                 ข้อมูลผู้ใช้น้ำ
                 <Icon name="mdi:account" />
@@ -104,12 +101,6 @@
             </div>
             <button class="btn btn-block mt-3 bg-sky-500 text-white text-xl font-bold">เพิ่มบิลการใช้น้ำ
                 <icon name="icon-park-outline:bill" /></button>
-
-
-
-
-
-
 
 
         </div>

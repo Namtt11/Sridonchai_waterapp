@@ -66,7 +66,7 @@ function login() {
 
   let loginSuccess = loginForm.username == 'admin' && loginForm.password == 'pass'
   if (loginSuccess) {
-    router.push({ path: '/blog' })
+    router.push({ path: '/report' })
   } else {
     alertModal.value?.showModal()
     hasErrors.username = "Username is required"
