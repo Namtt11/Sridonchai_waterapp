@@ -2,15 +2,8 @@
     <div class="flex h-dvh">
         <div class=" w-full   ">
             <div class="flex items-stretch gap-3 p-3 mx-3">
-                
-                <div class="pt-2 text-xl">
-                    <Icon name="ep:back"></Icon>
-                </div>
                 <input type="text" placeholder="ค้นหาบ้าน" class="input input-bordered w-full max-w-xs border-sky-500" />
                 <button class="btn flex-col bg-white border-sky-500 ">
-                    <div class="text-md">
-                        <Icon name="material-symbols:search" />  
-                    </div>
                     ค้นหา</button>
             </div>
             <div class="m-3 ">
