@@ -6,4 +6,4 @@ type ReportHouse = {
     paid: boolean
 }
 
-export {type ReportHouse}
+export {ReportHouse}

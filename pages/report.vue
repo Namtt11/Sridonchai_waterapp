@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col mx-3 h-dvh relative">
     <div class="flex flex-col sticky top-0 pt-3 bg-white">
-      <VueDatePicker v-model="month" month-picker />
+      <VueDatePicker v-model="month" month-picker @closed="selectedDate" />
       <div class="mt-3">
         <button
           @click="toggleSelectedStatus(status)"
@@ -43,10 +43,23 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { ref } from "vue";
 import { type ReportHouse } from "@/domains/types/reportHouse";
+
 const month = ref({
   month: new Date().getMonth(),
   year: new Date().getFullYear(),
 });
+
+const selectedDate = () => {
+  console.log(month);
+  console.log(month.value.year);
+  let curMonth = ("0000000000" + (month.value.month + 1)).slice(-2);
+  console.log(curMonth);
+
+  let resultMonth = month.value.year + "-" + curMonth;
+  console.log(resultMonth);
+
+  loadReportHouse(resultMonth)
+};
 
 function backgroundColor(status: string) {
   if (status === "เก็บเงินแล้ว") {
@@ -91,26 +104,30 @@ function toggleStatus(status: string) {
     return "bg-gray-200";
   }
 }
-let result = await useFetch<{message : ReportHouse[]}>(
-  "http://localhost:8000/api/method/sridonchai.sridonchai.api.get_house_status_by_month",
-  {
-    method: "post",
-    body: {
-      month : '2024-01'
-    },
-  }
-);
 
-console.log();  
+// const reportData = ref(result.data.value?.message);
+const reportData = ref([] as ReportHouse[]);
 
-const reportData = ref(result.data.value?.message);
+const loadReportHouse = async (sel_month : string) => {
+  let result = await useFetch<{ message: ReportHouse[] }>(
+    "http://localhost:8000/api/method/sridonchai.sridonchai.api.get_house_status_by_month",
+    {
+      method: "post",
+      body: {
+        month: sel_month,
+      },
+    }
+  );
 
-console.log(reportData.value)
+  reportData.value = result.data.value?.message ?? []
+};
+
+selectedDate()
 
 const reportFilteredData = computed(() => {
   return reportData?.value?.filter((x: ReportHouse) =>
     selectedStatus.value.find((s: string) => s === x.status)
-  );  
+  );
 });
 </script>
-~/domains/types/reportHouse
+
