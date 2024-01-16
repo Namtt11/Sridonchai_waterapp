@@ -36,10 +36,23 @@
                 </tbody>
             </table>
         </div>
-        <div class="mx_3"> เลขมิเตอร์ปัจจุบัน  <input type="text" placeholder="Type here" class="input input-bordered input-primary w-20 max-w-xs" />  หน่วย</div>
-        <div>ราคา <input type="text" placeholder="Type here" class="input input-bordered input-primary w-20 max-w-xs" /> บาท</div>
-
-        <div class="text-center"> <button class="btn btn-error">ยกเลิก</button> <button class="btn btn-success">บันทึก</button> </div>
+        <div class="mt-3 text-center text-xl">กรอกข้อมูลปัจจุบัน</div>
+        <div class="mt-3 flex space-x-10  justify-center">
+            <div class="mx-3 justify-start">เลขมิเตอร์ปัจจุบัน</div>
+            <div><input type="text" placeholder="0" class="input input-bordered input-primary w-24 max-w-xs" /></div>
+            <div class="mr-3">หน่วย</div>
+        </div>
+        <div class="mt-3 flex space-x-10  justify-center">
+            <div class="mx-3 justify-start">ราคา</div>
+            <div><input type="text" placeholder="0" class="input input-bordered input-primary w-24 max-w-xs" /></div>
+            <div class="mr-3">บาท</div>
+        </div>
+        
+        <div class="mt-3 flex space-x-10 justify-center">
+            <div> <button class="btn btn-error">ยกเลิก</button></div>
+            <div><button class="btn btn-success">บันทึก</button></div>
+        </div>
+        
 
         
     
