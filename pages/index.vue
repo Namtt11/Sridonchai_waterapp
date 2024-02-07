@@ -1,5 +1,8 @@
 <template>
   <div>
+
+    WHO AM I : {{ whoami }}
+
     TEST API :
 
     <div>
@@ -18,6 +21,11 @@ type catResult = {
 let result = await useFetch<catResult[]>("https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=2",{method : "get"})
 
 let catFacts = result.data
+
+let whoamiresult = await useFetch("http://localhost:8000/api/method/frappe.auth.get_logged_user",{
+  credentials : "include"
+})
+let whoami = whoamiresult.data
 </script>
 
 <style></style>

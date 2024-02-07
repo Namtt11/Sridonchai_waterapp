@@ -67,13 +67,10 @@ async function  login() {
   console.log(loginForm.username, loginForm.password)
 
   let loginSuccess = false;
-  let result = await useFetch("http://localhost:8000/api/method/login",{
+  let result = await useFetch("http://localhost:8000/api/method/logout",{
     method : "post",
     credentials : "include",
-    body : {
-      usr : loginForm.username,
-      pwd : loginForm.password
-    }
+  
   })
 
   console.log(result)
