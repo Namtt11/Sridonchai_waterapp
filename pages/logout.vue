@@ -3,7 +3,7 @@
     <div class="my-auto w-full mx-3 border rounded-md p-3 ">
       <div class="text-2xl text-center font-bold">
       <Icon name="entypo:login"/>
-        Login
+        Logout
       </div>
 
       <label class="form-control w-full">
@@ -27,7 +27,7 @@
 
       </label>
 
-      <button @click="login" className="btn btn-block mt-3 bg-sky-500 text-white text-xl font-bold">Login</button>
+      <button @click="login" className="btn btn-block mt-3 bg-sky-500 text-white text-xl font-bold">Logout</button>
     </div>
 
     <dialog ref="alertModal" id="my_modal_3" class="modal">
