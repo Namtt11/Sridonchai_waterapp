@@ -54,8 +54,7 @@
   </template>
   
   <script setup lang="ts">
-  
-  import '@vuepic/vue-datepicker/dist/main.css'
+
   import { ref } from 'vue';
   
   const month = ref({
