@@ -113,6 +113,7 @@ const loadReportHouse = async (sel_month : string) => {
     "http://localhost:8000/api/method/sridonchai.sridonchai.api.get_house_status_by_month",
     {
       method: "post",
+      credentials : "include",
       body: {
         month: sel_month,
       },
@@ -125,7 +126,7 @@ const loadReportHouse = async (sel_month : string) => {
 selectedDate()
 
 const reportFilteredData = computed(() => {
-  return reportData?.value?.filter((x: ReportHouse) =>
+  return reportData?.value?.filter((x: ReportHouse) =>  
     selectedStatus.value.find((s: string) => s === x.status)
   );
 });
