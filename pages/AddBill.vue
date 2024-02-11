@@ -37,7 +37,7 @@
         </div>
   
         <!-- Price -->
-        <div class="mt-3 flex space-x-10 justify-center">
+        <div class="mt-4 flex space-x-10 justify-center">
           <div class="mx-3 justify-start">ราคา</div>
           <div><input v-model="price" type="text" placeholder="0" class="input input-bordered input-primary w-24 max-w-xs" /></div>
           <div class="mr-3">บาท</div>

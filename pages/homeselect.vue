@@ -1,30 +1,29 @@
 <template>
-    <div class="flex h-dvh">
-      <div class="w-full">
-        <div class="flex items-stretch gap-3 p-3 mx-3">
-          <input
-            v-model="searchQuery"
-            type="text"
-            placeholder="ค้นหาบ้าน"
-            class="input input-bordered w-full max-w-xs border-sky-500"
-          />
-          <button @click="search" class="btn flex-col bg-white border-sky-500">
-            ค้นหา
-          </button>
+  <div class="flex h-dvh">
+    <div class="w-full">
+      <div class="flex items-stretch gap-3 p-3 mx-3">
+        <div @click="Back">
+          <Icon name="mdi:arrow-back-circle" size="36" />
         </div>
-        <div class="m-3">
-          <div v-for="(user, index) in users" :key="index" class="m-3 p-3 border rounded-md border-sky-500">
-            <p><b>ชื่อผู้ใช้น้ำ</b> {{ user.name }}</p>
-            <p><b>ที่อยู่</b> {{ user.address }}</p>
-            <p><b>ค้างชำระ</b> {{ user.amount }} บาท</p>
-            <p><b>หมายเลขมิเตอร์ประจำเดือน</b> {{ user.meterNumber }}</p>
-          </div>
+        <input v-model="searchQuery" type="text" placeholder="ค้นหาบ้าน"
+          class="input input-bordered w-full max-w-xs border-sky-500" />
+        <button @click="search" class="btn flex-col bg-white border-sky-500">
+          ค้นหา
+        </button>
+      </div>
+      <div class="m-3">
+        <div v-for="(user, index) in users" :key="index" class="m-3 p-3 border rounded-md border-sky-500">
+          <p><b>ชื่อผู้ใช้น้ำ</b> {{ user.name }}</p>
+          <p><b>ที่อยู่</b> {{ user.address }}</p>
+          <p><b>ค้างชำระ</b> {{ user.amount }} บาท</p>
+          <p><b>หมายเลขมิเตอร์ประจำเดือน</b> {{ user.meterNumber }}</p>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
-  <script setup lang="ts">
+  <!-- <script setup lang="ts">
   const searchQuery = ref('');
   const users = ref([
     {
@@ -46,5 +45,34 @@
     // Implement your search logic here
     // You can filter the 'users' array based on the searchQuery
   };
-  </script>
   
+async function  Back() {
+      router.push({ path: '/home' })
+}
+
+
+  </script> -->
+  
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useFetch } from "@vueuse/core";
+
+
+const searchQuery = ref('');
+const users = ref([]);
+
+const search = async () => {
+  // Fetch data from backend API
+  const response = await useFetch('/api/get_info_house', {
+    method: 'POST',
+    body: JSON.stringify({ searchQuery: searchQuery.value }),
+  });
+
+  // Update users array with fetched data
+  users.value = response;
+};
+
+async function Back() {
+  router.push({ path: '/home' })
+}
+</script>

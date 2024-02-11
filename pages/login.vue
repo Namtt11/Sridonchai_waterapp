@@ -3,23 +3,23 @@
     <div class="my-auto w-full mx-3 border rounded-md p-3 ">
       <div class="text-2xl text-center font-bold">
       <Icon name="entypo:login"/>
-        Login
+        เข้าสู่ระบบ
       </div>
 
       <label class="form-control w-full">
         <div class="label">
-          <span class="label-text">Username</span>
+          <span class="label-text">ชื่อผู้ใช้</span>
         </div>
-        <input v-model="loginForm.username" type="text" placeholder="Username" class="input input-bordered w-full" />
+        <input v-model="loginForm.username" type="text" placeholder="ชื่อผู้ใช้" class="input input-bordered w-full" />
       </label>
 
 
       <label class="form-control w-full">
         <div class="label">
-          <span class="label-text">Password</span>
+          <span class="label-text">รหัสผ่าน</span>
         </div>
         <input :class="{ 'input-error': hasErrors.username }" v-model="loginForm.password" type="password"
-          placeholder="Password" class="input input-bordered w-full" />
+          placeholder="รหัสผ่าน" class="input input-bordered w-full" />
 
         <div class="label">
           <span v-show="hasErrors.username" class="label-text-alt text-error">{{ hasErrors.username }}</span>
@@ -27,13 +27,13 @@
 
       </label>
 
-      <button @click="login" className="btn btn-block mt-3 bg-sky-500 text-white text-xl font-bold">Login</button>
+      <button @click="login" className="btn btn-block mt-3 bg-sky-500 text-white text-xl font-bold">เข้าสู่ระบบ</button>
     </div>
 
     <dialog ref="alertModal" id="my_modal_3" class="modal">
       <div class="modal-box">
 
-        <h3 class="font-bold text-lg">Alert</h3>
+        <h3 class="font-bold text-lg">แจ้งเตือน</h3>
         <p class="py-4">{{hasErrors.message}}</p>
       </div>
       <form method="dialog" class="modal-backdrop">
@@ -81,7 +81,7 @@ async function  login() {
 
 
   if (loginSuccess) {
-    router.push({ path: '/report' })
+    router.push({ path: '/home' })
   } else {
     alertModal.value?.showModal()
     

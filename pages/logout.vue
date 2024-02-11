@@ -1,71 +1,36 @@
 <template>
   <div class="flex h-dvh">
     <div class="my-auto w-full mx-3 border rounded-md p-3 ">
-      <div class="text-2xl text-center font-bold">
+      <div class="text-2xl text-center font-bold text-red-500" >
       <Icon name="entypo:login"/>
-        Logout
+        ออกจากระบบ
+        <div>คุณต้องการจะออกจากระบบใช่หรือไม่</div>
       </div>
 
-      <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text">Username</span>
-        </div>
-        <input v-model="loginForm.username" type="text" placeholder="Username" class="input input-bordered w-full" />
-      </label>
+      
 
-
-      <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text">Password</span>
-        </div>
-        <input :class="{ 'input-error': hasErrors.username }" v-model="loginForm.password" type="password"
-          placeholder="Password" class="input input-bordered w-full" />
-
-        <div class="label">
-          <span v-show="hasErrors.username" class="label-text-alt text-error">{{ hasErrors.username }}</span>
-        </div>
-
-      </label>
-
-      <button @click="login" className="btn btn-block mt-3 bg-sky-500 text-white text-xl font-bold">Logout</button>
+      <button @click="yes" className="btn btn-block mt-3 bg-green-500 text-white text-xl font-bold">ใช่</button>
+      <button @click="no" className="btn btn-block mt-3 bg-red-500 text-white text-xl font-bold">ไม่ใช่</button>
     </div>
-
-    <dialog ref="alertModal" id="my_modal_3" class="modal">
-      <div class="modal-box">
-
-        <h3 class="font-bold text-lg">Alert</h3>
-        <p class="py-4">{{hasErrors.message}}</p>
-      </div>
-      <form method="dialog" class="modal-backdrop">
-        <button>close</button>
-      </form>
-    </dialog>
-
   </div>
 </template>
 
 <script lang="ts" setup>
 
-let loginForm = reactive({
-  username: "",
-  password: "",
-})
-
-let hasErrors = reactive({
-  username: null as any,
-  password: null,
-  message : ""
-})
-
-const alertModal = ref<HTMLDialogElement>()
+// import { defineComponent } from '@nuxt/types';
+// export default defineComponent({
+//   methods: {
+//     redirectToNextPage() {
+//       this.$router.push('/next-page');
+//     }
+//   }
+// });
 
 const router = useRouter()
-const headers = useRequestHeaders(['cookie'])
 
-async function  login() {
-  console.log(loginForm)
-  console.log(loginForm.username, loginForm.password)
 
+async function  yes() {
+ 
   let loginSuccess = false;
   let result = await useFetch("http://localhost:8000/api/method/logout",{
     method : "post",
@@ -78,15 +43,13 @@ async function  login() {
 
 
   if (loginSuccess) {
-    router.push({ path: '/report' })
-  } else {
-    alertModal.value?.showModal()
-    
-
-
-    hasErrors.message = result.error.value?.data?.message
-  }
+    router.push({ path: '/login' })
+  } 
+};
+async function  no() {
+  router.push({ path: '/home' })
 }
+
 </script>
 
 <style></style>

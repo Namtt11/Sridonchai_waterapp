@@ -2,7 +2,6 @@
     <div>
       <div>
       </div>
-      
     </div>
     <div>
       <div class="card w-80 pt-6 mx-8 bg-base-80 shadow-xl image-full">
@@ -11,7 +10,8 @@
     <h2 class="card-title">ข้อมูลส่วนตัว</h2>
     <p>เข้าเพื่อดูข้อมูลส่วนตัวของคุณ</p>
     <div class="card-actions justify-end">
-      <button class="btn btn-primary">ถัดไป</button>
+      <button class="btn btn-primary" @click="NextPageMyprofile">ถัดไป</button>
+
     </div>
   </div>
 </div>
@@ -25,7 +25,7 @@
     <h2 class="card-title">เลือกบ้าน</h2>
     <p>ที่คุณต้องการจะเพิ่มข้อมูลการใช้น้ำในรายเดือนนี้</p>
     <div class="card-actions justify-end">
-      <button class="btn btn-primary">ถัดไป</button>
+      <button class="btn btn-primary" @click="NextPageHomeselect">ถัดไป</button>
     </div>
   </div>
 </div>
@@ -36,7 +36,7 @@
     <h2 class="card-title">รายงาน</h2>
     <p>ดูรายงานการทำงาน</p>
     <div class="card-actions justify-end">
-      <button class="btn btn-primary">ถัดไป</button>
+      <button class="btn btn-primary" @click="NextPageReport">ถัดไป</button>
     </div>
   </div>
 </div>
@@ -47,3 +47,20 @@
   </div>
 
 </template>
+
+<script>
+export default {
+  methods: {
+    NextPageMyprofile() {
+      this.$router.push('/myprofile');
+      
+    },
+    NextPageHomeselect() {
+      this.$router.push('/homeselect');
+    },
+    NextPageReport() {
+      this.$router.push('/report');
+  }
+}
+}
+</script>
