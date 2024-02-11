@@ -127,6 +127,7 @@ const loadReportHouse = async (sel_month : string) => {
 selectedDate()
 
 const reportFilteredData = computed(() => {
+
   return reportData?.value?.filter((x: ReportHouse) =>  
     selectedStatus.value.find((s: string) => s === x.status)
   );
