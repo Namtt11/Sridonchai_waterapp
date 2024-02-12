@@ -1,125 +1,117 @@
 <template>
-    <div class="flex h-dvh">
-      <div class="w-full">
-        <div class="flex items-stretch gap-3 p-3 mx-3">
-          <input
-            v-model="searchQuery"
-            type="text"
-            placeholder="ค้นหาบ้าน"
-            class="input input-bordered w-full max-w-xs border-sky-500"
-          />
-          <button @click="search" class="btn flex-col bg-white border-sky-500">
-            ค้นหา
-          </button>
-        </div>
-        <div class="m-3">
-          <div v-for="(user, index) in users" :key="index" class="m-3 p-3 border rounded-md border-sky-500">
-            <p><b>ชื่อผู้ใช้น้ำ</b> {{ user.name }}</p>
-            <p><b>ที่อยู่</b> {{ user.address }}</p>
-            <p><b>ค้างชำระ</b> {{ user.amount }} บาท</p>
-            <p><b>หมายเลขมิเตอร์ประจำเดือน</b> {{ user.meterNumber }}</p>
+  <div class="flex h-dvh">
+    <div class="w-full">
+      <div class="flex items-stretch gap-3 p-3 mx-3">
+        <div @click="Back"><Icon name="mdi:arrow-back-circle" size="36"/></div>
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="ค้นหาบ้าน"
+          class="input input-bordered w-full max-w-xs border-sky-500"
+        />
+        <button @click="search" class="btn flex-col bg-white border-sky-500">
+          ค้นหา
+        </button>
+      </div>
+      <div class="m-3">
+        <div v-for="(user, index) in users" :key="index" class="m-3 p-3 border rounded-md border-sky-500">
+          <p><b>ชื่อผู้ใช้น้ำ</b> {{ user.ownerName }}</p>
+          <p><b>ที่อยู่</b> {{ user.address }}</p>
+          <p><b>ค้างชำระ</b> {{ user.totalPrice }} บาท</p>
+          <p><b>หมายเลขมิเตอร์ประจำเดือน</b> {{ user.meterNumber }}</p>
+          <div v-for="(usage, i) in user.usages" :key="i">
+            <p><b>เดือน</b> {{ usage.month }}</p>
+            <p><b>จำนวนหน่วย</b> {{ usage.totalUnit }}</p>
+            <p><b>ราคารวม</b> {{ usage.totalPrice }}</p>
           </div>
         </div>
       </div>
     </div>
-  </template>
-  
-  <!-- <script setup lang="ts">
-  const searchQuery = ref('');
-  import VueDatePicker from "@vuepic/vue-datepicker";
-import "@vuepic/vue-datepicker/dist/main.css";
-import { ref } from "vue";
-import { type ReportHouse } from "@/domains/types/reportHouse";
+  </div>
+</template>
 
-const month = ref({
-  month: new Date().getMonth(),
-  year: new Date().getFullYear(),
-});
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const selectedDate = () => {
-  console.log(month);
-  console.log(month.value.year);
-  let curMonth = ("0000000000" + (month.value.month + 1)).slice(-2);
-  console.log(curMonth);
-
-  let resultMonth = month.value.year + "-" + curMonth;
-  console.log(resultMonth);
-
-  loadReportHouse(resultMonth)
-};
-
-function backgroundColor(status: string) {
-  if (status === "เก็บเงินแล้ว") {
-    return "bg-green-100";
-  } else if (status === "จดมิเตอร์แล้ว") {
-    return "bg-yellow-100";
-  } else {
-    return "bg-red-100";
-  }
+// Interface for the User data type
+interface User {
+  ownerName: string;
+  address: string;
+  totalPrice: number;
+  meterNumber: string;
+  usages: Usage[];
 }
 
-function textColor(status: string) {
-  if (status === "เก็บเงินแล้ว") {
-    return "text-green-500";
-  } else if (status === "จดมิเตอร์แล้ว") {
-    return "text-yellow-500";
-  } else {
-    return "text-red-500";
-  }
+// Interface for the Usage data type
+interface Usage {
+  month: string;
+  totalUnit: number;
+  totalPrice: number;
 }
 
-const statusFilter = ["เก็บเงินแล้ว", "จดมิเตอร์แล้ว", "ยังไม่ได้ดำเนินการ"];
+// Reactive property to store the search query
+const searchQuery = ref('');
 
-const selectedStatus = ref([
-  "เก็บเงินแล้ว",
-  "จดมิเตอร์แล้ว",
-  "ยังไม่ได้ดำเนินการ",
-]);
+// Reactive property to store the user data
+const users = ref<User[]>([]);
 
-function toggleSelectedStatus(status: string) {
-  if (selectedStatus.value.find((x: string) => x === status)) {
-    selectedStatus.value.splice(selectedStatus.value.indexOf(status), 1);
-  } else {
-    selectedStatus.value.push(status);
-  }
-}
+// Router instance
+const router = useRouter();
 
-function toggleStatus(status: string) {
-  if (selectedStatus.value.find((x: string) => x === status)) {
-    return ["bg-green-200", "text-black"];
-  } else {
-    return "bg-gray-200";
-  }
-}
-
-// const reportData = ref(result.data.value?.message);
-const reportData = ref([] as ReportHouse[]);
-
-const loadReportHouse = async (sel_month : string) => {
-  let result = await useFetch<{ message: ReportHouse[] }>(
-    "http://localhost:8000/api/method/sridonchai.sridonchai.api.get_house_status_by_month",
-    {
-      method: "post",
-      body: {
-        month: sel_month,
+// Fetch user data and assign it to the `users` array
+const search = async () => {
+  try {
+    const response = await fetch('/api/get_info_house', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
       },
-    }
-  );
+      body: JSON.stringify({ searchQuery: searchQuery.value })
+    });
 
-  reportData.value = result.data.value?.message ?? []
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const data = await response.json();
+
+    // Handle potential inconsistencies in response structure
+    if (!Array.isArray(data) || !data.every((d: any) => isValidUser(d))) {
+      throw new Error('Invalid API response format');
+    }
+
+    // Cast the response data to the User type
+    users.value = data as User[];
+  } catch (error) {
+    console.error(error);
+    // Handle errors gracefully, e.g., display user-friendly messages
+  }
 };
 
-selectedDate()
-
-const reportFilteredData = computed(() => {
-  return reportData?.value?.filter((x: ReportHouse) =>
-    selectedStatus.value.find((s: string) => s === x.status)
+// Function to validate if an object is a valid User
+function isValidUser(obj: any): obj is User {
+  return (
+    typeof obj.ownerName === 'string' &&
+    typeof obj.address === 'string' &&
+    typeof obj.totalPrice === 'number' &&
+    typeof obj.meterNumber === 'string' &&
+    Array.isArray(obj.usages) &&
+    obj.usages.every((usage: any) => isValidUsage(usage))
   );
-});
-  
-  const search = () => {
-    // Implement your search logic here
-    // You can filter the 'users' array based on the searchQuery
-  };
-  </script>
-  
+}
+
+// Function to validate if an object is a valid Usage
+function isValidUsage(obj: any): obj is Usage {
+  return (
+    typeof obj.month === 'string' &&
+    typeof obj.totalUnit === 'number' &&
+    typeof obj.totalPrice === 'number'
+  );
+}
+
+// Navigate back to the home page
+async function Back() {
+  await router.push({ path: '/home'});
+}
+</script>
