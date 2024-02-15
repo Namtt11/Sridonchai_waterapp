@@ -5,15 +5,16 @@
         <div class="text-2xl text-center font-bold">
           ข้อมูลส่วนตัว
         </div>
-        <div>
-            WHO AM I : {{ whoami }}
+        <div>ชื่อผู้ใช้ : {{ user.message.username }}</div>
+        <div>E-mail : {{ user.message.email }}</div>
+        <div>ชื่อ : {{ user.message.first_name }}</div>
+        <div>นามสกุล : {{ user.message.last_name }}</div>
+        
+        <!-- <label class="form-control w-full"> -->
+        <!-- <div class="label">
+          <span class="label-text">E-mail {{ user.message.email }}</span>
         </div>
-  
-        <label class="form-control w-full">
-        <div class="label">
-          <span class="label-text">E-mail  {{ user }}</span>
-        </div>
-        <input  type="text" placeholder="E-mail" class="input input-bordered w-full" />
+        <input  type="text" placeholder={{ user.message.email }} class="input input-bordered w-full" />
       </label>
 
       
@@ -29,7 +30,7 @@
           <span class="label-text">นามสกุล</span>
         </div>
         <input type="text" placeholder="นามสกุล" class="input input-bordered w-full" />
-      </label>
+      </label> -->
   
   
         

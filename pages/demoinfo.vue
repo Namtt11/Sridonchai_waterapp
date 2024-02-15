@@ -35,7 +35,7 @@
         </table>
       </div>
 
-      <button class="btn btn-block mt-3 bg-sky-500 text-white text-xl font-bold" @click="NextPageAddbill">
+      <button class="btn btn-block mt-3 bg-sky-500 text-white text-xl font-bold" @click(data.name)="NextPageAddbill">
         เพิ่มบิลการใช้น้ำ
         <icon name="icon-park-outline:bill" />
       </button>
@@ -65,13 +65,13 @@ let  Userdata  = await $fetch<{ message: {} }>("http://localhost:8000/api/method
   
   
 console.log(Userdata)
-const userInfo = ref(Userdata.name)
+const userInfo = ref(Userdata)
 
 
 
 const router = useRouter();
-async function  NextPageAddbill() {
-router.push({ path: '/Addbill' })
+async function  NextPageAddbill(id:string) {
+router.push({ path: '/Addbill/'+id })
 }
 async function  Back() {
 router.push({ path: '/homeselect' })

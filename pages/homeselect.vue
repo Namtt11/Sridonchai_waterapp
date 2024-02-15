@@ -34,6 +34,7 @@
           @click="GoInfo(data.name)"
           v-bind:key="data.name"
           v-for="data in reportFilteredData"
+      
           :class="[backgroundColor(data.status)]"
           class="flex-col border-solid border-2 border-gray-300 p-3"
         >
@@ -49,28 +50,10 @@
         </div>
       </div>
     </div>
-    <!-- <div class="overflow-y-auto mt-3 h-full">
-      <div class="grid gap-2">
-        <div
-          @click="GoInfo(data.name)"
-          v-bind:key="data.name"
-          v-for="data in  searchInputData"
-          :class="[backgroundColor(data.status)]"
-          class="flex-col border-solid border-2 border-gray-300 p-3"
-        >
-          <div class="text-md font-bold">{{ data.owner_name }}</div>
-          <div>{{ data.house_number }}</div>
-          <span class="align-text-bottom">
-            <span>สถานะ</span>
-            <span
-              :class="[textColor(data.status)]"
-              class="ml-1 text-md font-bold"
-              >{{ data.status }}</span
-            >
-          </span>
-        </div> -->
+  
+    </div>
   </div>
-  </div>
+  
 </template>
 <script setup lang="ts">
 import VueDatePicker from "@vuepic/vue-datepicker";
@@ -167,6 +150,9 @@ const reportFilteredData = computed(() => {
   );
 });
 
+
+
+
 const router = useRouter();
 async function  Back() {
   router.push({ path: '/home' })
@@ -177,25 +163,24 @@ async function  GoInfo(id : string) {
 }
 
 
-const searchInput = ref<any>();
+const searchInput = ref<string>('');
+
+const searchInputData = ref(reportData.value)
+
+
+
 async function  search(){
-  const searchInputData = computed(() => {
-    return searchInput?.value?.find(reportData)
-});
+ searchInputData.value = reportData.value.filter( (x : ReportHouse) => x.name.includes(searchInput.value))
+
 
 console.log('Searching for:', searchInput.value);
+console.log(searchInputData)
 }
 console.log('Searching for:', searchInput.value);
 
   
 
-  //   function searchdata(searchInputdata:string){
-//   const reportsearchFilteredData = computed(() => {
-//   return reportData?.value?.filter((x: ReportHouse) =>  
-//     searchdata.value.find((s: string) => s === x.status)
-//   );
-// });
-// }
+  
 
 
 
