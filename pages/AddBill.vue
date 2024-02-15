@@ -45,7 +45,7 @@
   
         <!-- Buttons -->
         <div class="mt-3 flex space-x-10 justify-center">
-          <div> <button class="btn btn-error">ยกเลิก</button></div>
+          <div> <button class="btn btn-error" @click="Cancel">ยกเลิก</button></div>
           <div><button class="btn btn-success">บันทึก</button></div>
         </div>
   
@@ -70,5 +70,11 @@
     { month: 'ธันวาคม', waterUsage: 15, payment: 105 },
     { month: 'พฤษจิกายน', waterUsage: 17, payment: 119 },
   ]);
+
+
+  const router = useRouter()
+  async function  Cancel() {
+  router.push({ path: '/info' })
+}
   </script>
   

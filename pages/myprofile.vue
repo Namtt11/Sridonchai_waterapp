@@ -11,9 +11,9 @@
   
         <label class="form-control w-full">
         <div class="label">
-          <span class="label-text">E-mail</span>
+          <span class="label-text">E-mail  {{ user }}</span>
         </div>
-        <input v-model="loginForm.username" type="text" placeholder="E-mail" class="input input-bordered w-full" />
+        <input  type="text" placeholder="E-mail" class="input input-bordered w-full" />
       </label>
 
       
@@ -33,74 +33,37 @@
   
   
         
-        <button @click="login" className="btn btn-block mt-3 bg-green-500 text-white text-xl font-bold">บันทึก</button>
-        <button @click="login" className="btn btn-block mt-3 bg-red-500 text-white text-xl font-bold">ออกจากระบบ</button>
+        <!-- <button @click="login" className="btn btn-block mt-3 bg-green-500 text-white text-xl font-bold">บันทึก</button> -->
+        <button @click="logout" className="btn btn-block mt-3 bg-red-500 text-white text-xl font-bold">ออกจากระบบ</button>
       </div>
   
-      <dialog ref="alertModal" id="my_modal_3" class="modal">
-        <div class="modal-box">
-  
-          <h3 class="font-bold text-lg">Alert</h3>
-          <p class="py-4">{{hasErrors.message}}</p>
-        </div>
-        <form method="dialog" class="modal-backdrop">
-          <button>close</button>
-        </form>
-      </dialog>
+      
   
     </div>
   </template>
   
   <script lang="ts" setup>
   
-  let loginForm = reactive({
-    username: "",
-    password: "",
-  })
-  
-  let hasErrors = reactive({
-    username: null as any,
-    password: null,
-    message : ""
-  })
-  
-  const alertModal = ref<HTMLDialogElement>()
-  
+
   const router = useRouter()
-  const headers = useRequestHeaders(['cookie'])
+
+  let  currentUser  = await useFetch("http://localhost:8000/api/method/sridonchai.sridonchai.api.get_current_user_info",{
+    credentials : "include"
+  })
+  let user = currentUser.data
   
-  async function  login() {
-    console.log(loginForm)
-    console.log(loginForm.username, loginForm.password)
-  
-    let loginSuccess = false;
-    let result = await useFetch("http://localhost:8000/api/method/logout",{
-      method : "post",
-      credentials : "include",
-    
-    })
-  
-    console.log(result)
-    loginSuccess = result.status.value === "success"
-  
-  
-    if (loginSuccess) {
-      router.push({ path: '/logout' })
-    } else {
-      alertModal.value?.showModal()
-      
-  
-  
-      hasErrors.message = result.error.value?.data?.message
-    }
-  }
   let whoamiresult = await useFetch("http://localhost:8000/api/method/frappe.auth.get_logged_user",{
   credentials : "include"
 })
 let whoami = whoamiresult.data
+
 async function  Back() {
   router.push({ path: '/home' })
 }
+async function  logout() {
+  router.push({ path: '/logout' })
+}
+
   </script>
   
   <style></style>
