@@ -18,7 +18,7 @@
           </thead>
           <tbody>
             <!-- rows -->
-            <tr v-for="(row, index) in userInfo" :key="index">
+            <tr v-for ="(row, index) in userInfo" :key="index">
             <td>{{ row.month }}</td>
             <td>{{ row.total_unit }}</td>
             <td>{{ row.total_price }}</td>
@@ -45,12 +45,39 @@
   
         <!-- Buttons -->
         <div class="mt-3 flex space-x-10 justify-center">
-          <div> <button class="btn btn-error" @click="Cancel(name)">ยกเลิก</button></div>
-          <div><button class="btn btn-success">บันทึก</button></div>
+          <div> <button class="btn  bg-red-500" @click="Cancel(name)">ยกเลิก</button></div>
+          <div><button class="btn  bg-green-500" @click="record">บันทึก</button></div>
         </div>
-  
       </div>
+
+
+      <dialog ref="alertModal" id="my_modal_3" class="modal">
+      <div class="modal-box">
+
+        <h3 class="font-bold text-lg text-center ">สรุปยอด</h3>
+        <p class="py-4">เลขมิเตอร์ที่จดครั้งล่าสุด :{{ last_meter }} หน่วย</p>
+        <p class="py-4">เลขมิเตอร์ที่จดปัจจุบัน : {{ currentMeter }} หน่วย</p>
+        <p class="py-4">จำนวนการใช้น้ำ :{{ water_usage }} หน่วย</p>
+        <p class="py-4">ราคาค่าน้ำต่อหน่วย : {{ config.message.unit_per_month }} บาท</p>
+        <p class="py-4">ค่าน้ำเดือนปัจจุบัน : {{ sum_price }} บาท</p>
+        <p class="py-4">ค่าบำรุงมิเตอร์ : {{ config.message.meter_maintenance_cost }} บาท</p>
+        <p class="py-4">สรุปยอดทั้งหมดเป็นราคา :{{ all }} บาท</p>
+
+
+        <div class="mt-3 flex space-x-10 justify-center">
+          <div > 
+            <form method="dialog" class="modal-backdrop">
+            <button class="btn btn-error  bg-red-500" @click="">ยกเลิก</button>
+            </form>
+          </div>
+          <div><button class="btn  bg-green-500" @click="record">บันทึก</button></div>
+        </div>
+      </div>
+    </dialog>
+
     </div>
+
+
   </template>
   
   <script lang="ts" setup>
@@ -74,8 +101,24 @@ name: string ; message: {}
   credentials : "include",
 
   })
+
+
+
   
-  console.log(Userdata.message)
+let config  = await $fetch<{
+name: string ; message: {} 
+}>("http://localhost:8000/api/method/sridonchai.sridonchai.api.get_config",{
+  method: "post",
+  headers : {
+    "Content-Type" : 'application/json'
+  },
+  // body:{
+  //   "unit_per_month": bath
+  // },
+  credentials : "include",
+
+  })
+
 const userInfo = ref(Userdata.message.Usages)
 
 
@@ -85,16 +128,38 @@ const userInfo = ref(Userdata.message.Usages)
     year: new Date().getFullYear()
   });
   
-  const currentMeter = ref('');
-  const price = ref('');
+  
 
   const router = useRouter()
   async function  Cancel(id:string) {
   router.push({ path: '/info/'+id })
 }
+const alertModal = ref<HTMLDialogElement>()
+
+// async function record() {
+//   alertModal.value?.showModal()
+// }
+
+
+const currentMeter = ref()
+const water_price = ref(config.message.unit_per_month)
+const maintenance_cost = ref(config.message.meter_maintenance_cost)
+const last_meter = ref('100')
+const price = ref()
+const water_usage = currentMeter.value - last_meter.value 
+const sum_price = computed(() => water_usage.value * water_price.value);
+const all = sum_price.value + maintenance_cost.value;
+
+
+price.value === sum_price
+
+
+console.log(sum_price)
+async function record() {
+  alertModal.value?.showModal()
   
+console.log(all.value)
+}
   </script>
   
-  <style>
   
-  </style>

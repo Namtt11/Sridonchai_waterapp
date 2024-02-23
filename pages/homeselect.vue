@@ -33,7 +33,7 @@
         <div
           @click="GoInfo(data.name)"
           v-bind:key="data.name"
-          v-for="data in reportFilteredData"
+          v-for="data in combinedData"
       
           :class="[backgroundColor(data.status)]"
           class="flex-col border-solid border-2 border-gray-300 p-3"
@@ -167,8 +167,6 @@ const searchInput = ref<string>('');
 
 const searchInputData = ref(reportData.value)
 
-
-
 async function  search(){
  searchInputData.value = reportData.value.filter( (x : ReportHouse) => x.name.includes(searchInput.value))
 
@@ -178,6 +176,13 @@ console.log(searchInputData)
 }
 console.log('Searching for:', searchInput.value);
 
+const combinedData = computed(() => {
+  if (!searchInput.value) {
+    return reportFilteredData.value;
+  } else {
+    return searchInputData.value;
+  }
+});
   
 
   

@@ -84,9 +84,6 @@ async function  login() {
     router.push({ path: '/home' })
   } else {
     alertModal.value?.showModal()
-    
-
-
     hasErrors.message = result.error.value?.data?.message
   }
 }
