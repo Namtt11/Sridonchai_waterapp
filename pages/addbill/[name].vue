@@ -1,12 +1,16 @@
 <template>
-    <div class="flex h-dvh">
-      <div class="w-full">
-  
-        <div class="my-6 text-2xl text-center rounded-md border-sky-500">เพิ่มการใช้น้ำเดือน</div>
-  
-        <div class="text-center">ข้อมูลการใช้น้ำย้อนหลัง <Icon name="ion:water-outline" /></div>
-  
-        <div class="overflow-x-auto">
+  <div class="flex h-dvh">
+    <div class="w-full">
+
+      <div class="my-6 text-2xl text-center rounded-md border-sky-500" v-once>เพิ่มการใช้น้ำเดือน
+        <p>{{ formattedDate }}</p>
+      </div>
+
+      <div class="text-center">ข้อมูลการใช้น้ำย้อนหลัง
+        <Icon name="ion:water-outline" />
+      </div>
+
+      <div class="overflow-x-auto">
         <table class="table table-zebra">
           <!-- head -->
           <thead>
@@ -18,40 +22,43 @@
           </thead>
           <tbody>
             <!-- rows -->
-            <tr v-for ="(row, index) in userInfo" :key="index">
-            <td>{{ row.month }}</td>
-            <td>{{ row.total_unit }}</td>
-            <td>{{ row.total_price }}</td>
-          </tr>
+            <tr v-for="(row, index) in userInfo" :key="index">
+              <td v-if="index < 3">{{ row.month }}</td>
+              <td v-if="index < 3">{{ row.total_unit }}</td>
+              <td v-if="index < 3">{{ row.total_price }}</td>
+              <!-- <td>{{ index }}</td> -->
+            </tr>
           </tbody>
         </table>
       </div>
-  
-        <div class="mt-3 text-center text-xl">กรอกข้อมูลปัจจุบัน</div>
-  
-        <!-- Current Meter -->
-        <div class="mt-3 flex space-x-10 justify-center">
-          <div class="mx-3 justify-start">เลขมิเตอร์ปัจจุบัน</div>
-          <div><input v-model="currentMeter" type="text" placeholder="0" class="input input-bordered input-primary w-24 max-w-xs" /></div>
-          <div class="mr-3">หน่วย</div>
-        </div>
-  
-        <!-- Price -->
-        <div class="mt-4 flex space-x-10 justify-center">
-          <div class="mx-3 justify-start">ราคา</div>
-          <div><input v-model="price" type="text" placeholder="0" class="input input-bordered input-primary w-24 max-w-xs" /></div>
-          <div class="mr-3">บาท</div>
-        </div>
-  
-        <!-- Buttons -->
-        <div class="mt-3 flex space-x-10 justify-center">
-          <div> <button class="btn  bg-red-500" @click="Cancel(name)">ยกเลิก</button></div>
-          <div><button class="btn  bg-green-500" @click="record">บันทึก</button></div>
-        </div>
+
+      <div class="mt-3 text-center text-xl">กรอกข้อมูลปัจจุบัน</div>
+      <div class="mt-3 text-center">เลขมิเตอร์เดือนก่อน {{ last_meter }} หน่วย</div>
+      <!-- Current Meter -->
+      <div class="mt-3 flex space-x-10 justify-center">
+        <div class="mx-3 justify-start">เลขมิเตอร์ปัจจุบัน</div>
+        <div><input v-model="currentMeter" type="text" placeholder="0"
+            class="input input-bordered input-primary w-24 max-w-xs" /></div>
+        <div class="mr-3">หน่วย</div>
       </div>
 
+      <!-- Price -->
+      <div class="mt-4 flex space-x-10 justify-center">
+        <div class="mx-3 justify-start">ราคา</div>
+        <div><input v-model="price" type="text" placeholder="0"
+            class="input input-bordered input-primary w-24 max-w-xs" /></div>
+        <div class="mr-3">บาท</div>
+      </div>
 
-      <dialog ref="alertModal" id="my_modal_3" class="modal">
+      <!-- Buttons -->
+      <div class="mt-3 flex space-x-10 justify-center">
+        <div> <button class="btn  bg-red-500" @click="Cancel(name)">ยกเลิก</button></div>
+        <div><button class="btn  bg-green-500" @click="record">บันทึก</button></div>
+      </div>
+    </div>
+
+
+    <dialog ref="alertModal" id="my_modal_3" class="modal">
       <div class="modal-box">
 
         <h3 class="font-bold text-lg text-center ">สรุปยอด</h3>
@@ -60,106 +67,158 @@
         <p class="py-4">จำนวนการใช้น้ำ :{{ water_usage }} หน่วย</p>
         <p class="py-4">ราคาค่าน้ำต่อหน่วย : {{ config.message.unit_per_month }} บาท</p>
         <p class="py-4">ค่าน้ำเดือนปัจจุบัน : {{ sum_price }} บาท</p>
-        <p class="py-4">ค่าบำรุงมิเตอร์ : {{ config.message.meter_maintenance_cost }} บาท</p>
-        <p class="py-4">สรุปยอดทั้งหมดเป็นราคา :{{ all }} บาท</p>
+        <p class="py-4">สรุปยอดทั้งหมดเป็นราคา :{{ sum_price }} บาท</p>
 
 
         <div class="mt-3 flex space-x-10 justify-center">
-          <div > 
+          <div>
             <form method="dialog" class="modal-backdrop">
-            <button class="btn btn-error  bg-red-500" @click="">ยกเลิก</button>
+              <button class="btn btn-error  bg-red-500" @click="">ยกเลิก</button>
             </form>
           </div>
-          <div><button class="btn  bg-green-500" @click="record">บันทึก</button></div>
+          <div><button class="btn  bg-green-500" @click="put_data">บันทึก</button></div>
         </div>
       </div>
     </dialog>
 
-    </div>
-
-
-  </template>
   
-  <script lang="ts" setup>
-  import { ref } from 'vue';
-
-  const route = useRoute()
-  console.log(route.params)
-  const name = route.params.name
+  </div>
+</template>
   
+<script lang="ts" setup>
 
-let  Userdata  = await $fetch<{
-name: string ; message: {} 
-}>("http://localhost:8000/api/method/sridonchai.sridonchai.api.get_info_house",{
+
+let now = new Date();
+const formattedDate = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}`;
+
+import { ref } from 'vue';
+
+const route = useRoute()
+console.log(route.params)
+const name = route.params.name
+
+
+let Userdata = await $fetch<{
+  name: string; message: {}
+}>("http://localhost:8000/api/method/sridonchai.sridonchai.api.get_info_house", {
   method: "post",
-  headers : {
-    "Content-Type" : 'application/json'
+  headers: {
+    "Content-Type": 'application/json'
   },
-  body:{
+  body: {
     "name": name
   },
-  credentials : "include",
+  credentials: "include",
 
-  })
+})
 
 
 
-  
-let config  = await $fetch<{
-name: string ; message: {} 
-}>("http://localhost:8000/api/method/sridonchai.sridonchai.api.get_config",{
+
+let config = await $fetch<{
+  name: string; message: {}
+}>("http://localhost:8000/api/method/sridonchai.sridonchai.api.get_config", {
   method: "post",
-  headers : {
-    "Content-Type" : 'application/json'
+  headers: {
+    "Content-Type": 'application/json'
   },
-  // body:{
-  //   "unit_per_month": bath
-  // },
-  credentials : "include",
 
-  })
+  credentials: "include",
+
+})
+
+let lastmeter = await $fetch<{
+  name: string; message: {}
+}>("http://localhost:8000/api/method/sridonchai.sridonchai.api.get_lastemeter_unit", {
+  method: "post",
+  headers: {
+    "Content-Type": 'application/json'
+  },
+  body: {
+    "name": name
+  },
+  credentials: "include",
+
+})
+
+
+
+
 
 const userInfo = ref(Userdata.message.Usages)
 
 
-  
-  const month = ref({
-    month: new Date().getMonth(),
-    year: new Date().getFullYear()
-  });
-  
-  
-
-  const router = useRouter()
-  async function  Cancel(id:string) {
-  router.push({ path: '/info/'+id })
+const router = useRouter()
+async function Cancel(id: string) {
+  router.push({ path: '/info/' + id })
 }
 const alertModal = ref<HTMLDialogElement>()
-
-// async function record() {
-//   alertModal.value?.showModal()
-// }
+const alertModal2 = ref<HTMLDialogElement>()
 
 
 const currentMeter = ref()
-const water_price = ref(config.message.unit_per_month)
-const maintenance_cost = ref(config.message.meter_maintenance_cost)
-const last_meter = ref('100')
+const water_price = ref(parseInt(config.message.unit_per_month))
+const last_meter = ref(parseInt(lastmeter.message.last_meter_unit));
 const price = ref()
-const water_usage = currentMeter.value - last_meter.value 
-const sum_price = computed(() => water_usage.value * water_price.value);
-const all = sum_price.value + maintenance_cost.value;
+const water_usage = computed(() => {
+  const usage = currentMeter.value - last_meter.value;
+  return Math.max(0, usage);
+});
+const sum_price = computed(() => {
+  if (water_usage.value * water_price.value === 0) {
+    return price.value;
+  } else {
+    return water_usage.value * water_price.value;
+  }
+});
 
-
-price.value === sum_price
-
+// 
 
 console.log(sum_price)
 async function record() {
   alertModal.value?.showModal()
-  
-console.log(all.value)
 }
-  </script>
+
+
+
+async function put_data(id : string) {
+  router.push({ path: '/recieve/' + id })
+  // console.log({
+
+  //   name: "1382530f3a",
+  //   owner: "bewphisit@gmail.com",
+  //   house: name,
+  //   user: "bewphisit@gmail.com",
+  //   last_meter_unit: last_meter.value,
+  //   current_meter_unit: currentMeter,
+  //   total_unit: water_usage.value,
+  //   total_price: sum_price.value
+  // })
+  let result = await $fetch("http://localhost:8000/api/resource/Water Usage", {
+    method: "post",
+
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": 'application/json'
+    },
+    body: {
+      owner: "bewphisit@gmail.com",
+      house: name,
+      user: "bewphisit@gmail.com",
+      month: formattedDate ,
+      last_meter_unit: last_meter.value,
+      current_meter_unit: currentMeter.value,
+      total_unit: water_usage.value,
+      total_price: sum_price.value
+    },
+    credentials: "include",
+
+
+  })
+  console.log(result)
+}
+
+
+</script>
   
   

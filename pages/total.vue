@@ -2,12 +2,19 @@
     <div class="flex h-dvh">
         <div class="my-auto w-full mx-3 border rounded-md p-3 ">
             <div class="text-2xl text-center font-bold">
-           
-            สรุปยอด
+            รับชำระเงิน
             </div>
-            
-      <button @click="Yes" className="btn btn-block mt-3 bg-green-500 text-white text-xl font-bold">ยืนยัน</button>
-      <button @click="No" className="btn btn-block mt-3 bg-red-500 text-white text-xl font-bold">ยกเลิก</button>
+            <div class="overflow-y-auto mt-3 h-full">
+      <div class="grid gap-2">
+        <div
+          class="flex-col border-solid border-2 border-gray-300 p-3" >
+          <div class="text-md font-bold" @click="Paybill">2023-11</div>
+          <span class="align-text-bottom">
+            <span>สถานะ : ยังไม่ได้เก็บเงิน</span>
+          </span>
+        </div>
+      </div>
+    </div>
         </div>
     </div>
    
@@ -15,15 +22,9 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    Yes() {
-      this.$router.push('/total');
-      
-    },
-    No() {
-      this.$router.push('/Addbill');
-    }
+const router = useRouter();
+async function  Paybill() {
+router.push({ path: '/getmonney/' })
 }
-}
+
 </script>

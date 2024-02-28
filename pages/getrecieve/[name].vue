@@ -15,15 +15,5 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    Yes() {
-      this.$router.push('/total');
-      
-    },
-    No() {
-      this.$router.push('/total');
-    }
-}
-}
+
 </script>

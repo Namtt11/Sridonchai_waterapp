@@ -158,8 +158,12 @@ async function  Back() {
   router.push({ path: '/home' })
 }
 
-async function  GoInfo(id : string) {
-  router.push({ path: '/info/'+id})
+async function GoInfo(id: string, status: string) {
+  if (status === "เก็บเงินแล้ว") {
+    return router.push({ path: '/homeselect' });
+  } else {
+    return router.push({ path: '/info/' + id });
+  }
 }
 
 
