@@ -28,20 +28,24 @@
 
 
 const route = useRoute()
-console.log(route.params)
-const waterusage = route.params.waterusage
+const waterusage = route.params.name
 
-const axios = require('axios');
+// const axios = require('axios');
 
-const url = 'http://localhost:8000/api/resource/Water Usage';
-const params = {
-  fields: JSON.stringify(["date_recieve", "name", "month"]),
-  filters: JSON.stringify([["date_recieve", "is", "not set"], ["house", "=", "143 - อ.ทวีศักดิ์  รักษาศรี"]])
-};
+// const url = 'http://localhost:8000/api/resource/Water Usage';
+// const params = {
+//   fields: JSON.stringify(["date_recieve", "name", "month"]),
+//   filters: JSON.stringify([["date_recieve", "is", "not set"], ["house", "=", waterusage]])
+// };
 
-const res =  axios.get('http://localhost:8000/api/resource/Water Usage', { params });
+// const res =  axios.get({url} , { params });
 
-console.log(res.data); // คุณสามารถทำอะไรกับข้อมูลที่ได้จากการรับคำตอบได้ต่อไป
+// console.log(res.data); // คุณสามารถทำอะไรกับข้อมูลที่ได้จากการรับคำตอบได้ต่อไป
+
+
+
+
+
 const router = useRouter();
 async function GoInfo(id: string) {
   router.push({ path: '/info/' + id });

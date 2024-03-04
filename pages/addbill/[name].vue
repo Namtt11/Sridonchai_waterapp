@@ -91,6 +91,24 @@
 let now = new Date();
 const formattedDate = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}`;
 
+let currentMonth = now.getMonth() + 1;
+let currentYear = now.getFullYear();
+
+// หากเดือนปัจจุบันเป็นเดือนมกราคม (1) ให้เปลี่ยนเป็นเดือนธันวาคม (12) ของปีที่แล้ว
+let lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+
+// หากเดือนเป็นเดือนมกราคม ให้ปีลดลงไปอีก 1 ปี
+let lastYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+
+// สร้างวัตถุ Date จากเดือนก่อนหน้า
+let lastMonthDate = new Date(lastYear, lastMonth - 1);
+
+// กำหนดรูปแบบเดือนก่อนหน้าในรูปแบบ 'YYYY-MM'
+const formattedLastMonthDate = `${lastMonthDate.getFullYear()}-${(lastMonthDate.getMonth() + 1).toString().padStart(2, '0')}`;
+
+console.log("เดือนก่อนหน้า:", formattedLastMonthDate);
+
+
 import { ref } from 'vue';
 
 const route = useRoute()
@@ -135,7 +153,8 @@ let lastmeter = await $fetch<{
     "Content-Type": 'application/json'
   },
   body: {
-    "name": name
+    "name": name ,
+    "month" : formattedLastMonthDate
   },
   credentials: "include",
 
@@ -158,7 +177,7 @@ const alertModal2 = ref<HTMLDialogElement>()
 
 const currentMeter = ref()
 const water_price = ref(parseInt(config.message.unit_per_month))
-const last_meter = ref(parseInt(lastmeter.message.last_meter_unit));
+const last_meter = ref(parseInt(lastmeter.message.current_meter_unit));
 const price = ref()
 const water_usage = computed(() => {
   const usage = currentMeter.value - last_meter.value;
