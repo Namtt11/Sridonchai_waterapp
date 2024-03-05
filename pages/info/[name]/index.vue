@@ -36,7 +36,7 @@
         </table>
         </div>
       <div class="sticky top-100">
-        <button class="btn btn-block mt-3 bg-red-500 text-white text-xl font-bold" @click="record(waterusage)">
+        <button class="btn btn-block mt-3 bg-red-500 text-white text-xl font-bold" @click="record(name)">
         รับชำระเงิน
         <icon name="icon-park-outline:bill" />
       </button>
@@ -59,10 +59,11 @@
   console.log(route.params)
   
   const name = route.params.name
-  const waterusage = route.params.waterusage
+  
 
   import { useRouter } from 'vue-router';
 import { useFetch } from '@vueuse/core';
+
 
 
 
@@ -98,8 +99,8 @@ router.push({ path: '/homeselect' })
 
 
 
-async function record() {
-  router.push({ path: '/total/' })
+async function record(id:string) {
+  router.push({ path: `/info/${route.params.name}/recieve`})
 }
  
   

@@ -22,6 +22,7 @@
 </template>
 
 <script>
+
 const router = useRouter();
 async function  Paybill() {
 router.push({ path: '/getmonney/' })

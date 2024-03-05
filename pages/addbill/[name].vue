@@ -201,18 +201,8 @@ async function record() {
 
 
 async function put_data(id : string) {
-  router.push({ path: '/recieve/' + id })
-  // console.log({
+  router.push({ path: '/homeselect/' })
 
-  //   name: "1382530f3a",
-  //   owner: "bewphisit@gmail.com",
-  //   house: name,
-  //   user: "bewphisit@gmail.com",
-  //   last_meter_unit: last_meter.value,
-  //   current_meter_unit: currentMeter,
-  //   total_unit: water_usage.value,
-  //   total_price: sum_price.value
-  // })
   let result = await $fetch("http://localhost:8000/api/resource/Water Usage", {
     method: "post",
 
